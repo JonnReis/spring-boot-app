@@ -21,7 +21,7 @@ create table for_fornecedor (
   unique key uni_for_nome (for_nome)
 );
 
-create table jpj_jogo_produtora (
+create table emf_empresa_fornecedor (
   emp_id bigint unsigned not null,
   for_id bigint unsigned not null,
   primary key (emp_id, for_id),
