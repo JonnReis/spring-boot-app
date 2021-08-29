@@ -57,5 +57,13 @@ public class Empresa {
     public void setSetor(String setor) {
         this.setor = setor;
     }
+
+    public Set<Fornecedor> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(Set<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
+    }
     
 }

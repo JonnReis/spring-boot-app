@@ -1,8 +1,10 @@
 package br.gov.sp.fatec.springbootapp;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.HashSet;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +49,10 @@ class SpringBootAppApplicationTests {
 		Empresa emp = new Empresa();
 		emp.setNome("testeEmpresa");
 		emp.setSetor("testeSetor");
-		// Resolver aqui
 		emp.setFornecedores(new HashSet<Fornecedor>());
+		emp.getFornecedores().add(frn);
 		empreRepo.save(emp);
+
 		assertNotNull(emp.getId());
 	}
 
@@ -61,5 +64,22 @@ class SpringBootAppApplicationTests {
 		assertNotNull(forneRepo.findByNome("testeFornecedor2"));
 	}
 
+	@Test
+	void empresaRepositoryFindByFornecedoresNomeTest() {
+		Fornecedor frn = new Fornecedor();
+		frn.setNome("testeFornecedor3");
+		forneRepo.save(frn);
+
+		Empresa emp = new Empresa();
+		emp.setNome("testeEmpresa1");
+		emp.setSetor("testeSetor1");
+		emp.setFornecedores(new HashSet<Fornecedor>());
+		emp.getFornecedores().add(frn);
+		empreRepo.save(emp);
+
+		List<Empresa> empresas = empreRepo.findByFornecedoresNome("testeFornecedor3");
+
+		assertFalse(empresas.isEmpty());
+	}
 }
 
