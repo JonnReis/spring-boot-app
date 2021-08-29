@@ -16,6 +16,7 @@ import br.gov.sp.fatec.springbootapp.entity.Empresa;
 import br.gov.sp.fatec.springbootapp.entity.Fornecedor;
 import br.gov.sp.fatec.springbootapp.repository.EmpresaRepository;
 import br.gov.sp.fatec.springbootapp.repository.FornecedorRepository;
+import br.gov.sp.fatec.springbootapp.service.EmpresaService;
 
 @SpringBootTest
 @Transactional
@@ -27,6 +28,9 @@ class SpringBootAppApplicationTests {
 
 	@Autowired
 	private EmpresaRepository empreRepo;
+
+	@Autowired
+	private EmpresaService empService;
 
 	@Test
 	void contextLoads() {
@@ -78,6 +82,15 @@ class SpringBootAppApplicationTests {
 		empreRepo.save(emp);
 
 		List<Empresa> empresas = empreRepo.findByFornecedoresNome("testeFornecedor3");
+
+		assertFalse(empresas.isEmpty());
+	}
+
+	@Test
+	void empresaServiceCadastrarEmpresaTest() {
+		empService.cadastrarEmpresa("teste", "teste", "paulaSouza");
+
+		List<Empresa> empresas = empreRepo.findByFornecedoresNome("paulaSouza");
 
 		assertFalse(empresas.isEmpty());
 	}
