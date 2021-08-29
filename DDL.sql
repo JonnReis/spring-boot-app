@@ -1,10 +1,10 @@
-create schema jogo;
+create schema comercio;
 
-use jogo;
+use comercio;
 
 create user 'teste'@'localhost' identified by 'teste123';
 
-grant select, insert, delete, update on jogo.* to teste@'localhost';
+grant select, insert, delete, update on comercio.* to teste@'localhost';
 
 create table emp_empresa (
   emp_id bigint unsigned not null auto_increment,
