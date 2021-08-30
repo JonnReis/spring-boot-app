@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.HashSet;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ class SpringBootAppApplicationTests {
 	private EmpresaRepository empreRepo;
 
 	@Autowired
-	private EmpresaService empService;
+	private EmpresaService empresaService;
 
 	@Test
 	void contextLoads() {
@@ -69,30 +68,26 @@ class SpringBootAppApplicationTests {
 	}
 
 	@Test
-	void empresaRepositoryFindByFornecedoresNomeTest() {
-		Fornecedor frn = new Fornecedor();
-		frn.setNome("testeFornecedor3");
-		forneRepo.save(frn);
-
-		Empresa emp = new Empresa();
-		emp.setNome("testeEmpresa1");
-		emp.setSetor("testeSetor1");
-		emp.setFornecedores(new HashSet<Fornecedor>());
-		emp.getFornecedores().add(frn);
-		empreRepo.save(emp);
-
-		List<Empresa> empresas = empreRepo.findByFornecedoresNome("testeFornecedor3");
-
-		assertFalse(empresas.isEmpty());
-	}
-
-	@Test
 	void empresaServiceCadastrarEmpresaTest() {
-		empService.cadastrarEmpresa("teste", "teste", "paulaSouza");
-
-		List<Empresa> empresas = empreRepo.findByFornecedoresNome("paulaSouza");
-
-		assertFalse(empresas.isEmpty());
+		empresaService.cadastrarEmpresa("testeNome", "testeSetor", "testeFornecedor");
+		
+		assertNotNull(empreRepo.findByNome("testeNome").getId());
 	}
+	
+	@Test
+	void empresaServiceFindByNomeAndSetorTest() {
+		empresaService.cadastrarEmpresa("testeNome", "testeSetor", "testeFornecedor");
+		
+		assertNotNull(empreRepo.findByNomeAndSetor("testeNome", "testeSetor").getId());
+	}
+	
+	@Test
+	void empresaRepositoryFindByFornecedoresNomeTest() {
+		empresaService.cadastrarEmpresa("testeNome", "testeSetor", "testeFornecedor");
+		
+		assertFalse(empreRepo.findByFornecedoresNome("testeFornecedor").isEmpty());
+	
+	}
+
 }
 
